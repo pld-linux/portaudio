@@ -1,5 +1,5 @@
-Summary:	PortAudio is a free, cross platform, open-source, audio I/O library.
-Summary(pl):	PortAudio to darmowa, miedzyplatformowa i otwarta biblioteka I/O audio.
+Summary:	Free, cross platform, open-source, audio I/O library
+Summary(pl):	Darmowa, miêdzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	18
 Release:	1
@@ -8,19 +8,20 @@ Group:		Libraries
 Source0:	http://www.portaudio.com/archives/%{name}_v%{version}_1.zip
 # Source0-md5:	ce66a732d263fde2b5ad2262ef37a691
 URL:		http://www.portaudio.com/
+BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-PortAudio is a free, cross platform, open-source, audio I/O
-library. It lets you write simple audio programs in 'C' that
-will compile and run on many platforms including Windows,
-Macintosh (8,9,X), Unix (OSS), SGI, and BeOS.
+PortAudio is a free, cross platform, open-source, audio I/O library.
+It lets you write simple audio programs in 'C' that will compile and
+run on many platforms including Windows, Macintosh (8,9,X), Unix
+(OSS), SGI, and BeOS.
 
 %description -l pl
-PortAudio to darmowa, miedzyplatformowa i otwarta biblioteka I/O
-audio. Pozwala na pisanie prostych programow w "C", ktore beda
-sie kompilowac i uruchamiac na wielu platwormach, w tym Windows,
-Macintosh (8,9,X), Unix (OSS), SGI, i BeOS.
+PortAudio to darmowa, miêdzyplatformowa i otwarta biblioteka I/O
+audio. Pozwala na pisanie prostych programów w "C", które bêd± siê
+kompilowaæ i uruchamiaæ na wielu platformach, w tym Windows, Macintosh
+(8,9,X), Unix (OSS), SGI, i BeOS.
 
 %package devel
 Summary:	Header files for PortAudio library
@@ -39,14 +40,14 @@ Pliki nag³ówkowe biblioteki PortAudio.
 
 %build
 mv Makefile.linux Makefile
-%{__make} sharedlib
+%{__make} sharedlib \
+	CFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{%{_libdir},%{_includedir}}
+
 install pa_unix_oss/libportaudio.so $RPM_BUILD_ROOT/%{_libdir}
-#%{__make} libinstall \
-#    LIBINST=$RPM_BUILD_ROOT/%{_libdir}
 install pa_common/portaudio.h $RPM_BUILD_ROOT/%{_includedir}
 
 %clean

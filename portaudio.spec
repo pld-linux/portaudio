@@ -1,14 +1,16 @@
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl):	Darmowa, miêdzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
-Version:	18
+Version:	19
 Release:	1
 License:	LGPL-like
 Group:		Libraries
-Source0:	http://www.portaudio.com/archives/%{name}_v%{version}_1.zip
-# Source0-md5:	ce66a732d263fde2b5ad2262ef37a691
+Source0:	http://www.portaudio.com/archives/pa_snapshot_v%{version}.tar.gz
+# Source0-md5:	ee93573d41f2867bf319addddd4eb6bf
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	sed >= 4.0
 URL:		http://www.portaudio.com/
-BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -35,20 +37,33 @@ Header files for PortAudio library.
 %description devel -l pl
 Pliki nag³ówkowe biblioteki PortAudio.
 
+%package static
+Summary:	Static PortAudio library
+Summary(pl):	Statyczna biblioteka PortAudio
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static PortAudio library.
+
+%description static -l pl
+Statyczna biblioteka PortAudio.
+
 %prep
-%setup -q -n %{name}_v%{version}_1
+%setup -q -n %{name}
 
 %build
-mv Makefile.linux Makefile
-%{__make} sharedlib \
-	CFLAGS="%{rpmcflags}"
+sed -i -e 's@"-g -O2 -Wall"@"%{rpmcflags}"@' configure*
+%{__aclocal}
+%{__autoconf}
+%configure
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}}
-
-install pa_unix_oss/libportaudio.so $RPM_BUILD_ROOT%{_libdir}
-install pa_common/portaudio.h $RPM_BUILD_ROOT%{_includedir}
+%{__make} install \
+	PREFIX=$RPM_BUILD_ROOT/usr
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -59,9 +74,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.txt LICENSE.txt
-%attr(755,root,root) %{_libdir}/libportaudio.so
+%attr(755,root,root) %{_libdir}/lib*.so*
 
 %files devel
 %defattr(644,root,root,755)
 %doc docs/*
 %{_includedir}/portaudio.h
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a

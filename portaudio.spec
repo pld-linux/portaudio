@@ -7,8 +7,11 @@ License:	LGPL-like
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_snapshot_v%{version}.tar.gz
 # Source0-md5:	ee93573d41f2867bf319addddd4eb6bf
-BuildRequires:	autoconf
+BuildRequires:	alsa-lib-devel >= 0.9
+BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake
+BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 URL:		http://www.portaudio.com/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -52,16 +55,19 @@ Statyczna biblioteka PortAudio.
 %prep
 %setup -q -n %{name}
 
+sed -i -e '/^CFLAGS="-g -O2 -Wall"/d' configure.in
+
 %build
-sed -i -e 's@"-g -O2 -Wall"@"%{rpmcflags}"@' configure*
 %{__aclocal}
 %{__autoconf}
 %configure
-%{__make}
+%{__make} \
+	SHARED_FLAGS="-shared -Wl,-soname=libportaudio.so.0"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}}
+
 %{__make} install \
 	PREFIX=$RPM_BUILD_ROOT/usr
 
@@ -74,11 +80,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.txt LICENSE.txt
-%attr(755,root,root) %{_libdir}/lib*.so*
+%attr(755,root,root) %{_libdir}/libportaudio.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
 %doc docs/*
+%attr(755,root,root) %{_libdir}/libportaudio.so
 %{_includedir}/portaudio.h
 
 %files static

@@ -45,10 +45,10 @@ mv Makefile.linux Makefile
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{%{_libdir},%{_includedir}}
+install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}}
 
-install pa_unix_oss/libportaudio.so $RPM_BUILD_ROOT/%{_libdir}
-install pa_common/portaudio.h $RPM_BUILD_ROOT/%{_includedir}
+install pa_unix_oss/libportaudio.so $RPM_BUILD_ROOT%{_libdir}
+install pa_common/portaudio.h $RPM_BUILD_ROOT%{_includedir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT

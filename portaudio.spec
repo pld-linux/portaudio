@@ -7,6 +7,7 @@ License:	LGPL-like
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_snapshot_v%{version}.tar.gz
 # Source0-md5:	ee93573d41f2867bf319addddd4eb6bf
+Patch0:		%{name}-Makefile.patch
 BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake
@@ -54,22 +55,25 @@ Statyczna biblioteka PortAudio.
 
 %prep
 %setup -q -n %{name}
+%patch0
 
 sed -i -e '/^CFLAGS="-g -O2 -Wall"/d' configure.in
 
 %build
+cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
+CFLAGS="$CFLAGS -fPIC"
 %configure
 %{__make} \
-	SHARED_FLAGS="-shared -Wl,-soname=libportaudio.so.0"
+	SHARED_FLAGS="-shared -Wl,-soname=libportaudio.so.0" 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}}
 
 %{__make} install \
-	PREFIX=$RPM_BUILD_ROOT/usr
+	PREFIX=$RPM_BUILD_ROOT/usr LIB=%{_lib}
 
 %clean
 rm -rf $RPM_BUILD_ROOT

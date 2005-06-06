@@ -99,8 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libportaudio.so
 %attr(755,root,root) %{_libdir}/libportaudio.so.*.*
 %{_includedir}/portaudio.h
-%{_includedir}/portaudio/pablio/*.h
-%{_includedir}/portaudio/pa_common/*.h
+%{_includedir}/portaudio
 
 %files static
 %defattr(644,root,root,755)

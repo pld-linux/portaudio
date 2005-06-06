@@ -75,8 +75,9 @@ install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}}
 %{__make} install \
 	PREFIX=$RPM_BUILD_ROOT/usr LIB=%{_lib}
 
-install -d $RPM_BUILD_ROOT%{_includedir}/portaudio/pablio
+install -d $RPM_BUILD_ROOT%{_includedir}/portaudio/{pablio,pa_common}
 install pablio/*.h $RPM_BUILD_ROOT%{_includedir}/portaudio/pablio
+install pa_common/*.h $RPM_BUILD_ROOT%{_includedir}/portaudio/pa_common
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -92,11 +93,14 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %dir %{_includedir}/portaudio
 %dir %{_includedir}/portaudio/pablio
+%dir %{_includedir}/portaudio/pa_common
 %defattr(644,root,root,755)
 %doc docs/*
 %attr(755,root,root) %{_libdir}/libportaudio.so
+%attr(755,root,root) %{_libdir}/libportaudio.so.*.*
 %{_includedir}/portaudio.h
 %{_includedir}/portaudio/pablio/*.h
+%{_includedir}/portaudio/pa_common/*.h
 
 %files static
 %defattr(644,root,root,755)

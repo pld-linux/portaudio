@@ -8,13 +8,13 @@ Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_snapshot_v%{version}.tar.gz
 # Source0-md5:	ee93573d41f2867bf319addddd4eb6bf
 Patch0:		%{name}-Makefile.patch
+URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
-URL:		http://www.portaudio.com/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description

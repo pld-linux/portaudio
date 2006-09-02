@@ -63,7 +63,7 @@ sed -i -e '/^CFLAGS="-g -O2 -Wall"/d' configure.in
 cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
-CFLAGS="$CFLAGS -fPIC"
+CFLAGS="%{rpmcflags} -fPIC"
 %configure
 %{__make} \
 	SHARED_FLAGS="-shared -Wl,-soname=libportaudio.so.0" 
@@ -88,16 +88,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.txt LICENSE.txt
-%attr(755,root,root) %{_libdir}/libportaudio.so.*.*
+%attr(755,root,root) %{_libdir}/libportaudio.so.*.*.*
 
 %files devel
-%dir %{_includedir}/portaudio
-%dir %{_includedir}/portaudio/pablio
-%dir %{_includedir}/portaudio/pa_common
 %defattr(644,root,root,755)
 %doc docs/*
 %attr(755,root,root) %{_libdir}/libportaudio.so
-%attr(755,root,root) %{_libdir}/libportaudio.so.*.*
 %{_includedir}/portaudio.h
 %{_includedir}/portaudio
 

@@ -1,0 +1,12 @@
+diff -Nur o.portaudio/configure.in n.portaudio/configure.in
+--- o.portaudio/configure.in	2006-09-04 11:55:57.000000000 +0200
++++ n.portaudio/configure.in	2006-09-26 18:56:48.000000000 +0200
+@@ -123,8 +123,6 @@
+ AC_SUBST(NASM)
+ AC_SUBST(NASMOPT)
+ 
+-CFLAGS=${CFLAGS:-"-g -O2 -Wall -pedantic -pipe -fPIC"}
+-
+ if [[ $ac_cv_c_bigendian = "yes" ]] ; then
+    CFLAGS="$CFLAGS -DPA_BIG_ENDIAN"
+ else

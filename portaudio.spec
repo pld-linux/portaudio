@@ -1,20 +1,23 @@
+#
+# Conditional build:
+%bcond_without	static_libs # don't build static libraries
+#
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl):	Darmowa, miêdzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	19
-Release:	1.20050226.1
+Release:	1.20060926.1
 License:	LGPL-like
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_snapshot_v%{version}.tar.gz
-# Source0-md5:	ee93573d41f2867bf319addddd4eb6bf
-Patch0:		%{name}-Makefile.patch
+# Source0-md5:	e418b70d4df87f269dfc346682c0ce7b
+Patch0:		%{name}-ac.patch
 URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	pkgconfig
-BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -34,6 +37,7 @@ Summary:	Header files for PortAudio library
 Summary(pl):	Pliki nag³ówkowe biblioteki PortAudio
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	pkgconfig
 
 %description devel
 Header files for PortAudio library.
@@ -55,29 +59,23 @@ Statyczna biblioteka PortAudio.
 
 %prep
 %setup -q -n %{name}
-%patch0
-
-sed -i -e '/^CFLAGS="-g -O2 -Wall"/d' configure.in
+%patch0 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
+%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
-CFLAGS="%{rpmcflags} -fPIC"
-%configure
-%{__make} \
-	SHARED_FLAGS="-shared -Wl,-soname=libportaudio.so.0" 
+%configure \
+	--enable-static=%{?with_static_libs:yes}%{!?with_static_libs:no}
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}}
 
 %{__make} install \
-	PREFIX=$RPM_BUILD_ROOT/usr LIB=%{_lib}
-
-install -d $RPM_BUILD_ROOT%{_includedir}/portaudio/{pablio,pa_common}
-install pablio/*.h $RPM_BUILD_ROOT%{_includedir}/portaudio/pablio
-install pa_common/*.h $RPM_BUILD_ROOT%{_includedir}/portaudio/pa_common
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -92,11 +90,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc docs/*
+#%doc docs/*
 %attr(755,root,root) %{_libdir}/libportaudio.so
+%{_libdir}/libportaudio.la
 %{_includedir}/portaudio.h
-%{_includedir}/portaudio
+%{_pkgconfigdir}/portaudio-*.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+%endif

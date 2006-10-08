@@ -37,7 +37,6 @@ Summary:	Header files for PortAudio library
 Summary(pl):	Pliki nag³ówkowe biblioteki PortAudio
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	pkgconfig
 
 %description devel
 Header files for PortAudio library.
@@ -90,7 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-#%doc docs/*
+#%doc doc/html/* ???
 %attr(755,root,root) %{_libdir}/libportaudio.so
 %{_libdir}/libportaudio.la
 %{_includedir}/portaudio.h

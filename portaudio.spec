@@ -6,7 +6,7 @@ Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl):	Darmowa, miêdzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	19
-Release:	1.20060926.1
+Release:	1.20060926.2
 License:	LGPL-like
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_snapshot_v%{version}.tar.gz

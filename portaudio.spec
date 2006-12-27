@@ -6,11 +6,12 @@ Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl):	Darmowa, miêdzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	19
-Release:	1.20060926.2
+%define	snap	061121
+Release:	1.20%{snap}.1
 License:	LGPL-like
 Group:		Libraries
-Source0:	http://www.portaudio.com/archives/pa_snapshot_v%{version}.tar.gz
-# Source0-md5:	e418b70d4df87f269dfc346682c0ce7b
+Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}_%{snap}.tar.gz
+# Source0-md5:	f2ceca92b3bfc206abccfb439c169a3c
 Patch0:		%{name}-ac.patch
 URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9
@@ -37,6 +38,8 @@ Summary:	Header files for PortAudio library
 Summary(pl):	Pliki nag³ówkowe biblioteki PortAudio
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	alsa-lib-devel >= 0.9
+Requires:	jack-audio-connection-kit-devel
 
 %description devel
 Header files for PortAudio library.

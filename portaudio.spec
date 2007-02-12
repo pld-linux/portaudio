@@ -3,7 +3,7 @@
 %bcond_without	static_libs # don't build static libraries
 #
 Summary:	Free, cross platform, open-source, audio I/O library
-Summary(pl):	Darmowa, miÍdzyplatformowa i otwarta biblioteka I/O audio
+Summary(pl.UTF-8):   Darmowa, miƒôdzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	19
 %define	snap	061121
@@ -27,15 +27,15 @@ It lets you write simple audio programs in 'C' that will compile and
 run on many platforms including Windows, Macintosh (8,9,X), Unix
 (OSS), SGI, and BeOS.
 
-%description -l pl
-PortAudio to darmowa, miÍdzyplatformowa i otwarta biblioteka I/O
-audio. Pozwala na pisanie prostych programÛw w "C", ktÛre bÍd± siÍ
-kompilowaÊ i uruchamiaÊ na wielu platformach, w tym Windows, Macintosh
+%description -l pl.UTF-8
+PortAudio to darmowa, miƒôdzyplatformowa i otwarta biblioteka I/O
+audio. Pozwala na pisanie prostych program√≥w w "C", kt√≥re bƒôdƒÖ siƒô
+kompilowaƒá i uruchamiaƒá na wielu platformach, w tym Windows, Macintosh
 (8,9,X), Unix (OSS), SGI, i BeOS.
 
 %package devel
 Summary:	Header files for PortAudio library
-Summary(pl):	Pliki nag≥Ûwkowe biblioteki PortAudio
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe biblioteki PortAudio
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	alsa-lib-devel >= 0.9
@@ -44,19 +44,19 @@ Requires:	jack-audio-connection-kit-devel
 %description devel
 Header files for PortAudio library.
 
-%description devel -l pl
-Pliki nag≥Ûwkowe biblioteki PortAudio.
+%description devel -l pl.UTF-8
+Pliki nag≈Ç√≥wkowe biblioteki PortAudio.
 
 %package static
 Summary:	Static PortAudio library
-Summary(pl):	Statyczna biblioteka PortAudio
+Summary(pl.UTF-8):   Statyczna biblioteka PortAudio
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static PortAudio library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka PortAudio.
 
 %prep

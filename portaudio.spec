@@ -3,7 +3,7 @@
 %bcond_without	static_libs # don't build static libraries
 #
 Summary:	Free, cross platform, open-source, audio I/O library
-Summary(pl.UTF-8):   Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
+Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	19
 %define	snap	061121
@@ -35,7 +35,7 @@ kompilować i uruchamiać na wielu platformach, w tym Windows, Macintosh
 
 %package devel
 Summary:	Header files for PortAudio library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki PortAudio
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki PortAudio
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	alsa-lib-devel >= 0.9
@@ -49,7 +49,7 @@ Pliki nagłówkowe biblioteki PortAudio.
 
 %package static
 Summary:	Static PortAudio library
-Summary(pl.UTF-8):   Statyczna biblioteka PortAudio
+Summary(pl.UTF-8):	Statyczna biblioteka PortAudio
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 

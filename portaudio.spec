@@ -1,13 +1,14 @@
 #
 # Conditional build:
-%bcond_without	static_libs # don't build static libraries
+%bcond_without	static_libs	# don't build static libraries
+%bcond_without	apidocs		# documentation generated with doxygen
 #
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	19
 %define	snap	061121
-Release:	1.20%{snap}.1
+Release:	1.20%{snap}.2
 License:	LGPL-like
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}_%{snap}.tar.gz
@@ -17,6 +18,7 @@ URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake
+%{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -59,6 +61,19 @@ Static PortAudio library.
 %description static -l pl.UTF-8
 Statyczna biblioteka PortAudio.
 
+%package apidocs
+Summary:	portaudio API documentation
+Summary(pl.UTF-8):	Documentacja API portaudio
+Group:		Documentation
+
+%description apidocs
+Documentation for portaudio API in HTML format generated from portaudio
+sources by doxygen.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API portaudio w formacie HTML generowane ze
+źrodeł portaudio przez doxygen.
+
 %prep
 %setup -q -n %{name}
 %patch0 -p1
@@ -72,6 +87,7 @@ cp -f /usr/share/automake/config.sub .
 	--enable-static=%{?with_static_libs:yes}%{!?with_static_libs:no}
 
 %{__make}
+%{?with_apidocs:/usr/bin/doxygen}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -102,4 +118,10 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+%endif
+
+%if %{with apidocs}
+%files apidocs
+%defattr(644,root,root,755)
+%doc doc/html/*
 %endif

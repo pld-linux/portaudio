@@ -7,12 +7,12 @@ Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	19
-%define	snap	061121
-Release:	1.20%{snap}.2
+%define	snap	20071207
+Release:	1.%{snap}.1
 License:	LGPL-like
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}_%{snap}.tar.gz
-# Source0-md5:	f2ceca92b3bfc206abccfb439c169a3c
+# Source0-md5:	d2943e4469834b25afe62cc51adc025f
 Patch0:		%{name}-ac.patch
 URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9

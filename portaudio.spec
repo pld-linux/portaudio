@@ -105,6 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.txt LICENSE.txt
 %attr(755,root,root) %{_libdir}/libportaudio.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libportaudio.so.2
 
 %files devel
 %defattr(644,root,root,755)
@@ -112,12 +113,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libportaudio.so
 %{_libdir}/libportaudio.la
 %{_includedir}/portaudio.h
-%{_pkgconfigdir}/portaudio-*.pc
+%{_pkgconfigdir}/portaudio-2.0.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libportaudio.a
 %endif
 
 %if %{with apidocs}

@@ -1,12 +1,21 @@
-diff -Nur o.portaudio/configure.in n.portaudio/configure.in
---- o.portaudio/configure.in	2006-09-04 11:55:57.000000000 +0200
-+++ n.portaudio/configure.in	2006-09-26 18:56:48.000000000 +0200
-@@ -123,8 +123,6 @@
- AC_SUBST(NASM)
- AC_SUBST(NASMOPT)
+diff -urN portaudio/configure.in portaudio.new//configure.in
+--- portaudio/configure.in	2011-03-25 17:59:27.000000000 +0100
++++ portaudio.new//configure.in	2011-04-10 22:35:28.547814050 +0200
+@@ -172,8 +172,6 @@
+       [[ "$enable_mac_universal" = "yes" ] &&
+        [ "$enable_mac_debug" != "yes" ]] ; then
+    CFLAGS="-O2 -Wall -pedantic -pipe -fPIC -DNDEBUG"
+-else
+-   CFLAGS=${CFLAGS:-"-g -O2 -Wall -pedantic -pipe -fPIC"}
+ fi
  
--CFLAGS=${CFLAGS:-"-g -O2 -Wall -pedantic -pipe -fPIC"}
--
  if [[ $ac_cv_c_bigendian = "yes" ]] ; then
-    CFLAGS="$CFLAGS -DPA_BIG_ENDIAN"
- else
+@@ -359,7 +357,7 @@
+               THREAD_CFLAGS="-mt"
+               ;;
+            *)
+-              SHARED_FLAGS="-shared -fPIC"
++              SHARED_FLAGS="-fPIC"
+               THREAD_CFLAGS="-pthread"
+               ;;
+         esac

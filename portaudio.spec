@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	static_libs	# don't build static libraries
 %bcond_without	apidocs		# documentation generated with doxygen
+%bcond_without	asahpi		# ASA HPI support
 #
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
@@ -9,18 +10,22 @@ Name:		portaudio
 Version:	19
 %define	snap	20110326
 Release:	1.%{snap}.1
-License:	LGPL-like
+License:	MIT-like (see LICENSE.txt)
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}_%{snap}.tgz
 # Source0-md5:	8f266ce03638419ef46e4efcb0fabde6
 Patch0:		%{name}-ac.patch
+Patch1:		http://audioscience.com/internet/download/drivers/released/v4/06/portaudio_asihpi_406.patch
 URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake
 %{?with_apidocs:BuildRequires:	doxygen}
+%{?with_asahpi:BuildRequires:	hpklinux-devel >= 4.06}
 BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
+%{?with_asahpi:Requires:	hpklinux-libs >= 4.06}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -41,6 +46,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki PortAudio
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	alsa-lib-devel >= 0.9
+%{?with_asahpi:Requires:	hpklinux-devel >= 4.06}
 Requires:	jack-audio-connection-kit-devel
 
 %description devel
@@ -74,17 +80,62 @@ sources by doxygen.
 Dokumentacja API portaudio w formacie HTML generowane ze
 źrodeł portaudio przez doxygen.
 
+%package c++
+Summary:	C++ binding for PortAudio library
+Summary(pl.UTF-8):	Wiązanie C++ do biblioteki PortAudio
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description c++
+C++ binding for PortAudio library.
+
+%description c++ -l pl.UTF-8
+Wiązanie C++ do biblioteki PortAudio.
+
+%package c++-devel
+Summary:	Header files for C++ binding for PortAudio library
+Summary(pl.UTF-8):	Pliki nagłówkowe wiązania C++ do biblioteki PortAudio
+Group:		Development/Libraries
+Requires:	%{name}-c++ = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	libstdc++-devel
+
+%description c++-devel
+Header files for C++ binding for PortAudio library.
+
+%description c++-devel -l pl.UTF-8
+Pliki nagłówkowe wiązania C++ do biblioteki PortAudio.
+
+%package c++-static
+Summary:	Static library of C++ binding for PortAudio library
+Summary(pl.UTF-8):	Statyczna biblioteka wiązania C++ do biblioteki PortAudio
+Group:		Development/Libraries
+Requires:	%{name}-c++-devel = %{version}-%{release}
+
+%description c++-static
+Static library of C++ binding for PortAudio library.
+
+%description c++-static -l pl.UTF-8
+Statyczna biblioteka wiązania C++ do biblioteki PortAudio.
+
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%patch1 -p0
 
 %build
 cp -f /usr/share/automake/config.sub .
 %{__libtoolize}
+cd bindings/cpp
+%{__aclocal}
+%{__autoconf}
+%{__automake}
+cd ../..
 %{__aclocal}
 %{__autoconf}
 %configure \
-	--enable-static=%{?with_static_libs:yes}%{!?with_static_libs:no}
+	--enable-cxx \
+	--enable-static%{!?with_static_libs:=no}
 
 %{__make}
 %{?with_apidocs:/usr/bin/doxygen}
@@ -128,3 +179,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/html/*
 %endif
+
+%files c++
+%defattr(644,root,root,755)
+%doc bindings/cpp/{COPYING,ChangeLog}
+%attr(755,root,root) %{_libdir}/libportaudiocpp.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libportaudiocpp.so.0
+
+%files c++-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libportaudiocpp.so
+%{_includedir}/portaudiocpp
+%{_pkgconfigdir}/portaudiocpp.pc
+
+%files c++-static
+%defattr(644,root,root,755)
+%{_libdir}/libportaudiocpp.a

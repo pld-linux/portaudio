@@ -4,7 +4,7 @@
 # Conditional build:
 %bcond_without	static_libs	# don't build static libraries
 %bcond_without	apidocs		# documentation generated with doxygen
-%bcond_with	asahpi		# ASA HPI support
+%bcond_with	asihpi		# ASI HPI support
 #
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
@@ -23,11 +23,11 @@ BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake
 %{?with_apidocs:BuildRequires:	doxygen}
-%{?with_asahpi:BuildRequires:	hpklinux-devel >= 4.06}
+%{?with_asihpi:BuildRequires:	hpklinux-devel >= 4.06}
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
-%{?with_asahpi:Requires:	hpklinux-libs >= 4.06}
+%{?with_asihpi:Requires:	hpklinux-libs >= 4.06}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -48,7 +48,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki PortAudio
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	alsa-lib-devel >= 0.9
-%{?with_asahpi:Requires:	hpklinux-devel >= 4.06}
+%{?with_asihpi:Requires:	hpklinux-devel >= 4.06}
 Requires:	jack-audio-connection-kit-devel
 
 %description devel
@@ -123,7 +123,7 @@ Statyczna biblioteka wiązania C++ do biblioteki PortAudio.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%if %{with asahpi}
+%if %{with asihpi}
 %patch1 -p0
 %endif
 
@@ -139,7 +139,8 @@ cd ../..
 %{__autoconf}
 %configure \
 	--enable-cxx \
-	--enable-static%{!?with_static_libs:=no}
+	--enable-static%{!?with_static_libs:=no} \
+	%{!?with_asihpi:--without-asihpi}
 
 %{__make}
 %{?with_apidocs:/usr/bin/doxygen}

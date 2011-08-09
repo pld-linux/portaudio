@@ -123,9 +123,7 @@ Statyczna biblioteka wiązania C++ do biblioteki PortAudio.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%if %{with asihpi}
-%patch1 -p0
-%endif
+%{?with_asihpi:%patch1 -p0}
 
 %build
 cp -f /usr/share/automake/config.sub .

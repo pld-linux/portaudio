@@ -1,8 +1,10 @@
 #
+# TODO: portaudio_asihpi_406.patch is broken
+#
 # Conditional build:
 %bcond_without	static_libs	# don't build static libraries
 %bcond_without	apidocs		# documentation generated with doxygen
-%bcond_without	asahpi		# ASA HPI support
+%bcond_with	asahpi		# ASA HPI support
 #
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
@@ -121,7 +123,9 @@ Statyczna biblioteka wiązania C++ do biblioteki PortAudio.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%if %{with asahpi}
 %patch1 -p0
+%endif
 
 %build
 cp -f /usr/share/automake/config.sub .

@@ -4,7 +4,7 @@
 # Conditional build:
 %bcond_without	static_libs	# don't build static libraries
 %bcond_without	apidocs		# documentation generated with doxygen
-%bcond_with	asihpi		# ASI HPI support
+%bcond_without	asihpi		# ASI HPI support
 #
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
@@ -17,7 +17,8 @@ Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}_%{snap}.tgz
 # Source0-md5:	8f266ce03638419ef46e4efcb0fabde6
 Patch0:		%{name}-ac.patch
-Patch1:		http://audioscience.com/internet/download/drivers/released/v4/06/portaudio_asihpi_406.patch
+# http://audioscience.com/internet/download/drivers/released/v4/06/portaudio_asihpi_406.patch
+Patch1:		portaudio_asihpi_406.patch
 URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf >= 2.13
@@ -27,6 +28,7 @@ BuildRequires:	automake
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.566
 %{?with_asihpi:Requires:	hpklinux-libs >= 4.06}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -123,7 +125,8 @@ Statyczna biblioteka wiązania C++ do biblioteki PortAudio.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%{?with_asihpi:%patch1 -p0}
+%undos src/hostapi/asihpi/pa_linux_asihpi.c
+%patch1 -p0
 
 %build
 cp -f /usr/share/automake/config.sub .

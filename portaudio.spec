@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
 Version:	19
 %define	snap	20110326
-Release:	1.%{snap}.2
+Release:	1.%{snap}.3
 License:	MIT-like (see LICENSE.txt)
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}_%{snap}.tgz

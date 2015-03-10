@@ -143,7 +143,7 @@ cd ../..
 	--enable-static%{!?with_static_libs:=no} \
 	%{!?with_asihpi:--without-asihpi}
 
-%{__make}
+%{__make} -j1
 %{?with_apidocs:/usr/bin/doxygen}
 
 %install

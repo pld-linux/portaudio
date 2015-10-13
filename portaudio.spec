@@ -1,13 +1,11 @@
 #
-# TODO: portaudio_asihpi_406.patch is broken
-#
 # Conditional build:
 %bcond_without	static_libs	# don't build static libraries
 %bcond_without	apidocs		# documentation generated with doxygen
 %bcond_without	asihpi		# ASI HPI support
 
-%define	snap	20110326
-%define	rel		4
+%define	snap	20140130
+%define	rel	1
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
@@ -16,10 +14,8 @@ Release:	1.%{snap}.%{rel}
 License:	MIT-like (see LICENSE.txt)
 Group:		Libraries
 Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}_%{snap}.tgz
-# Source0-md5:	8f266ce03638419ef46e4efcb0fabde6
+# Source0-md5:	7f220406902af9dca009668e198cbd23
 Patch0:		%{name}-ac.patch
-# http://audioscience.com/internet/download/drivers/released/v4/06/portaudio_asihpi_406.patch
-Patch1:		%{name}_asihpi_406.patch
 URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9
 BuildRequires:	autoconf >= 2.13
@@ -129,8 +125,6 @@ Statyczna biblioteka wiązania C++ do biblioteki PortAudio.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%undos src/hostapi/asihpi/pa_linux_asihpi.c
-%patch1 -p0
 
 %build
 cp -f /usr/share/automake/config.sub .

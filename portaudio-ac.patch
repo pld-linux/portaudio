@@ -10,12 +10,3 @@ diff -urN portaudio/configure.in portaudio.new//configure.in
  fi
  
  if [[ $ac_cv_c_bigendian = "yes" ]] ; then
-@@ -359,7 +357,7 @@
-               THREAD_CFLAGS="-mt"
-               ;;
-            *)
--              SHARED_FLAGS="-shared -fPIC"
-+              SHARED_FLAGS="-fPIC"
-               THREAD_CFLAGS="-pthread"
-               ;;
-         esac

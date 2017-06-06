@@ -4,7 +4,7 @@
 %bcond_without	apidocs		# documentation generated with doxygen
 %bcond_without	asihpi		# ASI HPI support
 
-%define	snap	20140130
+%define	snap	20161030
 %define	rel	1
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
@@ -13,8 +13,8 @@ Version:	19
 Release:	1.%{snap}.%{rel}
 License:	MIT-like (see LICENSE.txt)
 Group:		Libraries
-Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}_%{snap}.tgz
-# Source0-md5:	7f220406902af9dca009668e198cbd23
+Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}0600_%{snap}.tgz
+# Source0-md5:	4df8224e047529ca9ad42f0521bf81a8
 Patch0:		%{name}-ac.patch
 URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9

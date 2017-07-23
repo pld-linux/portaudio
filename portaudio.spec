@@ -5,7 +5,7 @@
 %bcond_without	asihpi		# ASI HPI support
 
 %define	snap	20161030
-%define	rel	1
+%define	rel	2
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
@@ -157,6 +157,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
+
+%post	c++ -p /sbin/ldconfig
+%postun	c++ -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)

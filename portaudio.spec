@@ -199,6 +199,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/portaudiocpp
 %{_pkgconfigdir}/portaudiocpp.pc
 
+%if %{with static_libs}
 %files c++-static
 %defattr(644,root,root,755)
 %{_libdir}/libportaudiocpp.a
+%endif

@@ -72,9 +72,7 @@ Statyczna biblioteka PortAudio.
 Summary:	portaudio API documentation
 Summary(pl.UTF-8):	Documentacja API portaudio
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 Documentation for portaudio API in HTML format generated from

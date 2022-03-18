@@ -4,17 +4,17 @@
 %bcond_without	apidocs		# documentation generated with doxygen
 %bcond_without	asihpi		# ASI HPI support
 
-%define	snap	20161030
-%define	rel	2
 Summary:	Free, cross platform, open-source, audio I/O library
 Summary(pl.UTF-8):	Darmowa, międzyplatformowa i otwarta biblioteka I/O audio
 Name:		portaudio
-Version:	19
-Release:	1.%{snap}.%{rel}
+%define	fdate	20210406
+%define	fver	190700
+Version:	19.7.0.%{fdate}
+Release:	1
 License:	MIT-like (see LICENSE.txt)
 Group:		Libraries
-Source0:	http://www.portaudio.com/archives/pa_stable_v%{version}0600_%{snap}.tgz
-# Source0-md5:	4df8224e047529ca9ad42f0521bf81a8
+Source0:	http://files.portaudio.com/archives/pa_stable_v%{fver}_%{fdate}.tgz
+# Source0-md5:	ad319249932c6794b551d954b8844402
 Patch0:		%{name}-ac.patch
 URL:		http://www.portaudio.com/
 BuildRequires:	alsa-lib-devel >= 0.9
@@ -161,7 +161,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.txt LICENSE.txt
+%doc README.md LICENSE.txt
 %attr(755,root,root) %{_libdir}/libportaudio.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libportaudio.so.2
 
